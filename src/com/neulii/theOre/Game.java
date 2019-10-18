@@ -1,9 +1,16 @@
 package com.neulii.theOre;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+
+import com.neulii.theOre.graphics.Screen;
 
 public class Game extends Canvas implements Runnable {
 
@@ -11,25 +18,30 @@ public class Game extends Canvas implements Runnable {
 
 	private int width = 300;
     private int height = width / 16 * 9;
-
-    private boolean running = false;
-
     private  int scale = 3;
 
+    private boolean running = false;
+    
     private Thread thread;
-
     private JFrame frame;
+    
+    private Screen screen;
 
+    private BufferedImage image = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
+    private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+    
     public Game(){
     	
         Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
         
-        frame = new JFrame();
         
+        screen = new Screen(width, height);
+        
+        frame = new JFrame();
 
     }
-    public void start(){
+    public synchronized void start(){
 
     	running = true;
 
@@ -73,6 +85,19 @@ public class Game extends Canvas implements Runnable {
     		return;
     	}
     	
+    	Graphics g = bs.getDrawGraphics();
+    	
+    	//drawing operations begin
+    	
+    		//set Background black
+	    	g.setColor(Color.black);
+	    	g.fillRect(0, 0, getWidth(), getHeight());
+	    	
+	    	
+    	
+    	//drawing operations end
+    	g.dispose();
+    	bs.show();
     }
 
 
