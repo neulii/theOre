@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.neulii.theOre.graphics.Screen;
+import com.neulii.theOre.input.Keyboard;
 
 public class Game extends Canvas implements Runnable {
 
@@ -27,6 +28,8 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private JFrame frame;
     
+    private Keyboard key;
+    
     private Screen screen;
 
     private BufferedImage image = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
@@ -38,8 +41,14 @@ public class Game extends Canvas implements Runnable {
         setPreferredSize(size);
         
         screen = new Screen(width, height);
-        
         frame = new JFrame();
+        key = new Keyboard();
+        
+        addKeyListener(key);
+        
+        //window dont must be clicked for focus
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
 
     }
     
@@ -105,8 +114,24 @@ public class Game extends Canvas implements Runnable {
     int y = 0;
     
     public void update() {
-    	x++;
-    	y++;
+    	
+    	key.update();
+    	if(key.up) {
+    		y--;
+    	}
+    	
+    	if(key.down) {
+    		y++;
+    	}
+    	
+    	if(key.left) {
+    		x--;
+    	}
+    	
+    	if(key.right) {
+    		x++;
+    	}
+    
 
     }
     
@@ -121,7 +146,7 @@ public class Game extends Canvas implements Runnable {
     	
     	//write bufferedimage for showing on screen
     	screen.clear();
-    	screen.render(y,x);
+    	screen.render(x,y);
     	
     	for(int i = 0; i<pixels.length; i++) {
     		pixels[i]= screen.pixels[i];
