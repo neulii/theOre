@@ -101,7 +101,14 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
     
+    int x = 0;
+    int y = 0;
+    
     public void update() {
+    	x++;
+    	//y++;
+    	
+    	
     	
     	
     }
@@ -115,8 +122,9 @@ public class Game extends Canvas implements Runnable {
     		return;
     	}
     	
+    	//write bufferedimage for showing on screen
     	screen.clear();
-    	screen.render();
+    	screen.render(y,x);
     	
     	for(int i = 0; i<pixels.length; i++) {
     		pixels[i]= screen.pixels[i];
@@ -130,6 +138,7 @@ public class Game extends Canvas implements Runnable {
 	    	g.setColor(Color.black);
 	    	g.fillRect(0, 0, getWidth(), getHeight());
 	    	
+	    	//image written by screen
 	    	g.drawImage(image, 0,0 , getWidth(), getHeight(),null);
 	    		
     	//drawing operations end
