@@ -22,11 +22,15 @@ public class Screen {
 				
 				pixels[x+y*width] = 0xff00ff;
 				
-
-				
-				
 			}
 		}
+	}
+	
+	public void clear() {
+		for(int i = 0; i<pixels.length; i++) {
+			pixels[i] = 0x000000; //black
+		}
+		
 	}
 
 }
