@@ -42,16 +42,16 @@ public class Game extends Canvas implements Runnable {
         frame = new JFrame();
 
     }
+    
     public synchronized void start(){
 
     	running = true;
 
         thread = new Thread(this, "Display");
-        thread.start();
-        
+        thread.start();    
     }
 
-    public void stop(){
+    public synchronized void stop(){
 
     	running = false;
 
@@ -106,11 +106,8 @@ public class Game extends Canvas implements Runnable {
     
     public void update() {
     	x++;
-    	//y++;
-    	
-    	
-    	
-    	
+    	y++;
+
     }
     
     public void render() {
