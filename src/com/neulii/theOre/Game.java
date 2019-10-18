@@ -1,6 +1,8 @@
 package com.neulii.theOre;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
@@ -33,9 +35,7 @@ public class Game extends Canvas implements Runnable {
 
         thread = new Thread(this, "Display");
         thread.start();
-
-
-
+        
     }
 
     public void stop(){
@@ -53,28 +53,42 @@ public class Game extends Canvas implements Runnable {
     public void run(){
         while(running){
 
-        	System.out.println("running....");
-
+        	update(); //60 ticks per second
+        	render(); //fast as possible
         }
 
+    }
+    
+    public void update() {
+    	
+    	
+    }
+    
+    public void render() {
+    	
+    	BufferStrategy bs = getBufferStrategy();
+    	
+    	if(bs==null) {
+    		createBufferStrategy(3);
+    		return;
+    	}
+    	
     }
 
 
     public static void main(String[] args){
 
     	Game game = new Game();
-    	game.start();
     	
     	game.frame.setResizable(false);
     	game.frame.setTitle("The Ore");
     	game.frame.add(game);
     	game.frame.pack();
-
     	game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	game.frame.setLocationRelativeTo(null);
-    	
     	game.frame.setVisible(true);
     	
+    	game.start();
     	
 
     }
